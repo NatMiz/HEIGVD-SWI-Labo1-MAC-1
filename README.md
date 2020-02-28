@@ -21,7 +21,7 @@ __A faire en équipes de deux personnes__
 *	Détecter si un certain client WiFi se trouve à proximité
 *	Obtenir une liste des SSIDs annoncés par les clients WiFi présents
 
-Vous allez devoir faire des recherches sur internet pour apprendre à utiliser Scapy et la suite aircrack pour vos manipulations. __Il est fortement conseillé d'employer une distribution Kali__ (on ne pourra pas assurer le support avec d'autres distributions). __Si vous utilisez une VM, il vous faudra une interface WiFi usb, disponible sur demande__.
+Vous allez devoir faire des recherches sur internet pour apprendre à utiliser Scapy et la suite aircrack pour vos manipulations. __Il est fortement conseillé d'employer une distribution Kali__ (on ne pourra pas assurer le support avec d'autres distriairodump-ng wlp2s0monbutions). __Si vous utilisez une VM, il vous faudra une interface WiFi usb, disponible sur demande__.
 
 __ATTENTION :__ Pour vos manipulations, il pourrait être important de bien fixer le canal lors de vos captures et/ou vos injections (à vous de déterminer si ceci est nécessaire pour les manipulations suivantes ou pas). Si vous en avez besoin, la méthode la plus sure est d'utiliser l'option :
 
@@ -88,12 +88,25 @@ Le corps de la trame (Frame body) contient, entre autres, un champ de deux octet
 | 39 | Requested from peer QSTA due to timeout                                                                                                                                              |
 | 40 | Peer QSTA does not support the requested cipher suite                                                                                                                                              |
 | 46-65535 | Reserved                                                                                                                                              |
- 
+
 a) Utiliser la fonction de déauthentification de la suite aircrack, capturer les échanges et identifier le Reason code et son interpretation.
 
 __Question__ : quel code est utilisé par aircrack pour déauthentifier un client 802.11. Quelle est son interpretation ?
 
+![](images/Aireplay-Deauth.png)
+
+```
+Le code utilisé par aircrack est le 7 : Class 3 frame received from nonassociated station.
+```
+
 __Question__ : A l'aide d'un filtre d'affichage, essayer de trouver d'autres trames de déauthentification dans votre capture. Avez-vous en trouvé d'autres ? Si oui, quel code contient-elle et quelle est son interpretation ?
+
+![](/home/stefan/CloudStation/HEIG_3ème/Semestre2/SWI/Laboratoires/HEIGVD-SWI-Labo1-MAC-1/images/multiple_deauth.jpg)
+
+```
+Oui, on a pu trouver d'autres trames de déauthentification.
+En comparant les autres trames de déauthentification, nous avons pu remarquer que les codes sont les mêmes.
+```
 
 b) Développer un script en Python/Scapy capable de générer et envoyer des trames de déauthentification. Le script donne le choix entre des Reason codes différents (liste ci-après) et doit pouvoir déduire si le message doit être envoyé à la STA ou à l'AP :
 * 1 - Unspecified
@@ -103,13 +116,43 @@ b) Développer un script en Python/Scapy capable de générer et envoyer des tra
 
 __Question__ : quels codes/raisons justifient l'envoie de la trame à la STA cible et pourquoi ?
 
+```
+
+```
+
+
+
 __Question__ : quels codes/raisons justifient l'envoie de la trame à l'AP et pourquoi ?
+
+```
+
+```
+
+
 
 __Question__ : Comment essayer de déauthentifier toutes les STA ?
 
+```
+Il faudrait juste faire un broadcast des stations en definissant la valeur des STA à "FF:FF:FF:FF:FF:FF"
+```
+
+
+
 __Question__ : Quelle est la différence entre le code 3 et le code 8 de la liste ?
 
+```
+Le code 3 déauthentifie les clients de l'AP. Alors que la 8, le client quitte le réseau géré par l'AP. 
+```
+
+
+
 __Question__ : Expliquer l'effet de cette attaque sur la cible
+
+```
+Cela va déconnecter la cible de l'access point.
+```
+
+
 
 ### 2. Fake channel evil tween attack
 a)	Développer un script en Python/Scapy avec les fonctionnalités suivantes :
