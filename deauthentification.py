@@ -1,4 +1,10 @@
+# SWI - Labo1-MAC1
+# Date: 28.02.2020
+# File: deauthentication.py
+# Students: Stefan Dejanovic, Nathanael Mizutani
+
 # source : https://www.shellvoide.com/python/forge-and-transmit-de-authentication-packets-over-the-air-in-scapy/
+# -*- coding: utf-8 -*-
 
 from scapy.all import *
 
