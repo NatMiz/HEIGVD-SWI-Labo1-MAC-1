@@ -138,7 +138,7 @@ Les codes 1 et 8 Justifient l'envoi de la trame à l'AP.
 __Question__ : Comment essayer de déauthentifier toutes les STA ?
 
 ```
-Il faudrait juste faire un broadcast des stations en definissant la valeur des STA à "FF:FF:FF:FF:FF:FF"
+Il faudrait juste faire un broadcast des stations en definissant la valeur des STA à "FF:FF:FF:FF:FF:FF".
 ```
 
 
