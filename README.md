@@ -117,7 +117,10 @@ b) Développer un script en Python/Scapy capable de générer et envoyer des tra
 __Question__ : quels codes/raisons justifient l'envoie de la trame à la STA cible et pourquoi ?
 
 ```
-
+Les codes 1, 4 et 5 justifient l'envoi de la trame à la STA cible.
+- Le code 1 ne donne pas de raison particulière donc il peut être envoyé aussi bien à la STA que l'AP.
+- Le code 4 indique que la STA a été déconnecté car elle est restée trop longtemps inactive. Une telle raison ne ferait pas sens pour un AP.
+- Le code 5 indique que l'AP ne peut plus servir une STA de plus. Ce message est clairement à destination de la STA qui a été déauthnetifiée.
 ```
 
 
@@ -125,7 +128,9 @@ __Question__ : quels codes/raisons justifient l'envoie de la trame à la STA cib
 __Question__ : quels codes/raisons justifient l'envoie de la trame à l'AP et pourquoi ?
 
 ```
-
+Les codes 1 et 8 Justifient l'envoi de la trame à l'AP.
+- Le code 1 ne donne pas de raison particulière donc il peut être envoyé aussi bien à la STA que l'AP.
+- Le code 8 indique explicitement qu'il s'agit d'un message d'une STA qui quitte le réseau géré par l'AP.
 ```
 
 
