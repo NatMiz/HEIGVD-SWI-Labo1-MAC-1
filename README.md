@@ -101,7 +101,7 @@ Le code utilisé par aircrack est le 7 : Class 3 frame received from nonassociat
 
 __Question__ : A l'aide d'un filtre d'affichage, essayer de trouver d'autres trames de déauthentification dans votre capture. Avez-vous en trouvé d'autres ? Si oui, quel code contient-elle et quelle est son interpretation ?
 
-![](/home/stefan/CloudStation/HEIG_3ème/Semestre2/SWI/Laboratoires/HEIGVD-SWI-Labo1-MAC-1/images/multiple_deauth.jpg)
+![](images/multiple_deauth.jpg)
 
 ```
 Oui, on a pu trouver d'autres trames de déauthentification.
