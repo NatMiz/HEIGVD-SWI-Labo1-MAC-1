@@ -151,7 +151,7 @@ Cela va déconnecter la cible de l'access point.
 
 **Remarque :** Voici un screenshot du fonctionnement du script. À droite nous avons le script qui est executé et on peut voir a gauche wireshark qui effectue bien une déauthentification avec la raison numéro 4. Pour lancer le script il faut passer 3 argument. Le 1ère est l'adresse mac de la station, la 2ème est l'adresse max de l'AP et la dernière est l'intérface.
 
-![](/home/stefan/CloudStation/HEIG_3ème/Semestre2/SWI/Laboratoires/HEIGVD-SWI-Labo1-MAC-1/images/deauthScript.png)
+![](images/deauthScript.png)
 
 ### 2. Fake channel evil tween attack
 a)	Développer un script en Python/Scapy avec les fonctionnalités suivantes :
@@ -184,6 +184,10 @@ On voit ci-dessous une des trames envoyées par le script :
 ### 3. SSID flood attack
 
 Développer un script en Python/Scapy capable d'inonder la salle avec des SSID dont le nom correspond à une liste contenue dans un fichier texte fournit par un utilisateur. Si l'utilisateur ne possède pas une liste, il peut spécifier le nombre d'AP à générer. Dans ce cas, les SSID seront générés de manière aléatoire.
+
+**Remarque :** Ici nous avons un screenshot de l'execution du script pour faire un SSID flood attack. À droite, on peut voir que nous avons effectivement que la liste fourni par le fichier txt correspon au AP créé. Pour executer le script, il faut mettre en argument tous d'abord le nom du fichier a ouvrir ou bien le nombre d'AP qu'on veut et le 2ème est l'interface.
+
+![](images/SSIDFloodAttack.png)
 
 ## Livrables
 
