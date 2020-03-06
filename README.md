@@ -123,8 +123,6 @@ Les codes 1, 4 et 5 justifient l'envoi de la trame à la STA cible.
 - Le code 5 indique que l'AP ne peut plus servir une STA de plus. Ce message est clairement à destination de la STA qui a été déauthnetifiée.
 ```
 
-
-
 __Question__ : quels codes/raisons justifient l'envoie de la trame à l'AP et pourquoi ?
 
 ```
@@ -133,15 +131,11 @@ Les codes 1 et 8 Justifient l'envoi de la trame à l'AP.
 - Le code 8 indique explicitement qu'il s'agit d'un message d'une STA qui quitte le réseau géré par l'AP.
 ```
 
-
-
 __Question__ : Comment essayer de déauthentifier toutes les STA ?
 
 ```
 Il faudrait juste faire un broadcast des stations en definissant la valeur des STA à "FF:FF:FF:FF:FF:FF".
 ```
-
-
 
 __Question__ : Quelle est la différence entre le code 3 et le code 8 de la liste ?
 
@@ -149,15 +143,15 @@ __Question__ : Quelle est la différence entre le code 3 et le code 8 de la list
 Le code 3 déauthentifie les clients de l'AP. Alors que la 8, le client quitte le réseau géré par l'AP. 
 ```
 
-
-
 __Question__ : Expliquer l'effet de cette attaque sur la cible
 
 ```
 Cela va déconnecter la cible de l'access point.
 ```
 
+**Remarque :** Voici un screenshot du fonctionnement du script. À droite nous avons le script qui est executé et on peut voir a gauche wireshark qui effectue bien une déauthentification avec la raison numéro 4. Pour lancer le script il faut passer 3 argument. Le 1ère est l'adresse mac de la station, la 2ème est l'adresse max de l'AP et la dernière est l'intérface.
 
+![](/home/stefan/CloudStation/HEIG_3ème/Semestre2/SWI/Laboratoires/HEIGVD-SWI-Labo1-MAC-1/images/deauthScript.png)
 
 ### 2. Fake channel evil tween attack
 a)	Développer un script en Python/Scapy avec les fonctionnalités suivantes :
