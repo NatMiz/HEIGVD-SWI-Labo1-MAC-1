@@ -24,21 +24,25 @@ def fakeAP(ssid):
     # using the `iface` interface
     sendp(frame, inter=0.1, iface=sys.argv[2], loop=1)
 
-
+# If we don't have 2 arguments
 if len(sys.argv) != 3:
     print("Please add arguments to use the script")
     print("1 argument: the number of AP or the file name")
     print("2 argument: Interface")
     exit()
 
+# if the first argument is numeric
 if sys.argv[1].isnumeric():
+    # create a number of AP that is in parameter with the name Fake AP
     for x in range(0, int(sys.argv[1])):
         threadAP = threading.Thread(target=fakeAP, args=("Fake AP",))
         threadAP.start()
 else:
     try:
+        # open the file
         f = open(sys.argv[1], "r")
         line = f.readline()
+        # read all lines and create a AP peer line
         while line:
             threadAP = threading.Thread(target=fakeAP, args=(line,))
             threadAP.start()
