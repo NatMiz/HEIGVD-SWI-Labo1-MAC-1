@@ -16,6 +16,8 @@
 
 __A faire en équipes de deux personnes__
 
+**Etudiants :** Stefan Dejanovic, Nathanaël Mizutani
+
 ### Pour cette partie pratique, vous devez être capable de :
 
 *	Détecter si un certain client WiFi se trouve à proximité
@@ -91,20 +93,20 @@ Le corps de la trame (Frame body) contient, entre autres, un champ de deux octet
 
 a) Utiliser la fonction de déauthentification de la suite aircrack, capturer les échanges et identifier le Reason code et son interprétation.
 
-__Question__ : quel code est utilisé par aircrack pour déauthentifier un client 802.11. Quelle est son interpretation ?
+__Question__ : quel code est utilisé par aircrack pour déauthentifier un client 802.11. Quelle est son interprétation ?
 
 ![](images/Aireplay-Deauth.png)
 
-```
+```markdown
 Le code utilisé par aircrack est le 7 : Class 3 frame received from nonassociated station.
 ```
 
-__Question__ : A l'aide d'un filtre d'affichage, essayer de trouver d'autres trames de déauthentification dans votre capture. Avez-vous en trouvé d'autres ? Si oui, quel code contient-elle et quelle est son interpretation ?
+__Question__ : A l'aide d'un filtre d'affichage, essayer de trouver d'autres trames de déauthentification dans votre capture. Avez-vous en trouvé d'autres ? Si oui, quel code contient-elle et quelle est son interprétation ?
 
 ![](images/multiple_deauth.jpg)
 
-```
-Oui, on a pu trouver d'autres trames de déauthentification.
+```markdown
+Oui, nous avons pu trouver d'autres trames de déauthentification.
 En comparant les autres trames de déauthentification, nous avons pu remarquer que les codes sont les mêmes.
 ```
 
@@ -120,7 +122,7 @@ __Question__ : quels codes/raisons justifient l'envoie de la trame à la STA cib
 Les codes 1, 4 et 5 justifient l'envoi de la trame à la STA cible.
 - Le code 1 ne donne pas de raison particulière donc il peut être envoyé aussi bien à la STA que l'AP.
 - Le code 4 indique que la STA a été déconnecté car elle est restée trop longtemps inactive. Une telle raison ne ferait pas sens pour un AP.
-- Le code 5 indique que l'AP ne peut plus servir une STA de plus. Ce message est clairement à destination de la STA qui a été déauthnetifiée.
+- Le code 5 indique que l'AP ne peut plus servir une STA de plus. Ce message est clairement à destination de la STA qui a été déauthentifiée.
 ```
 
 __Question__ : quels codes/raisons justifient l'envoie de la trame à l'AP et pourquoi ?
@@ -149,7 +151,7 @@ __Question__ : Expliquer l'effet de cette attaque sur la cible
 Cela va déconnecter la cible de l'access point.
 ```
 
-**Remarque :** Voici un screenshot du fonctionnement du script. À droite nous avons le script qui est executé et on peut voir a gauche wireshark qui effectue bien une déauthentification avec la raison numéro 4. Pour lancer le script il faut passer 3 argument. Le 1ère est l'adresse mac de la station, la 2ème est l'adresse max de l'AP et la dernière est l'intérface.
+**Remarque :** Voici une capture d'écran du fonctionnement du script. À droite nous avons le script qui est exécuté. A gauche, on peut voir une capture wireshark qui confirme qu'une déauthentification est effectuée avec la raison numéro 4. Pour lancer le script il faut passer 3 arguments. Le 1er est l'adresse mac de la station, le 2e est l'adresse mac de l'AP et le dernier est l'interface.
 
 ![](images/deauthScript.png)
 
@@ -172,7 +174,7 @@ Le script commence par scanner les ssid présents à proximité :
 ![Scan des ssid](images/EvilTwin-Scanning-ssid.png)
 
 ```
-L'utilisateur peut ensuite choisir le ssid du réseau qu'il souhaite attaquer. Une fois le choix effectuer une dernière confirmation est demander pour lancer l'attaque.
+L'utilisateur peut ensuite choisir le ssid du réseau qu'il souhaite attaquer. Une fois le choix effectué une dernière confirmation est demandée pour lancer l'attaque.
 ```
 ![Evil Twin attack](images/EvilTwin-attack.png)
 
@@ -185,7 +187,9 @@ On voit ci-dessous une des trames envoyées par le script :
 
 Développer un script en Python/Scapy capable d'inonder la salle avec des SSID dont le nom correspond à une liste contenue dans un fichier texte fournit par un utilisateur. Si l'utilisateur ne possède pas une liste, il peut spécifier le nombre d'AP à générer. Dans ce cas, les SSID seront générés de manière aléatoire.
 
-**Remarque :** Ici nous avons un screenshot de l'execution du script pour faire un SSID flood attack. À droite, on peut voir que nous avons effectivement que la liste fourni par le fichier txt correspon au AP créé. Pour executer le script, il faut mettre en argument tous d'abord le nom du fichier a ouvrir ou bien le nombre d'AP qu'on veut et le 2ème est l'interface.
+
+**Remarque :** Ici nous avons une capture d'écran de l'exécution du script pour faire un SSID flood attack. À droite, on peut voir que la liste fournie par le fichier txt correspond au AP créé. Pour exécuter le script, il faut mettre en argument tout d'abord le nom du fichier à ouvrir ou le nombre d'AP qu'on veut puis l'interface.
+
 
 ![](images/SSIDFloodAttack.png)
 
