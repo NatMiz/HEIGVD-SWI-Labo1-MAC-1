@@ -171,7 +171,21 @@ __Question__ : Expliquer l'effet de cette attaque sur la cible
 ```
 Si la cible est déjà connectée à l'AP qu'on imite, il ne se passera rien. Par contre si la cible a été préalablement déauthentifier de l'AP, et si notre signal est plus puissant que celui de l'AP, la cible tentera de se connecter sur notre faux réseau.
 ```
+#### Utilisation du script
+```
+Le script commence par scanner les ssid présents à proximité :
+```
+![Scan des ssid](images/EvilTwin-Scanning-ssid.png)
 
+```
+L'utilisateur peut ensuite choisir le ssid du réseau qu'il souhaite attaquer. Une fois le choix effectuer une dernière confirmation est demander pour lancer l'attaque.
+```
+![Evil Twin attack](images/EvilTwin-attack.png)
+
+```
+On voit ci-dessous une des trames envoyées par le script :
+```
+![faux beacon](images/EvilTwin-wireshark-beacon.png)
 
 ### 3. SSID flood attack
 
