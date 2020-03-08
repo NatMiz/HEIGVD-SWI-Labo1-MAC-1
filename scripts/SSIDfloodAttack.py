@@ -35,7 +35,7 @@ if len(sys.argv) != 3:
 if sys.argv[1].isnumeric():
     # create a number of AP that is in parameter with the name Fake AP
     for x in range(0, int(sys.argv[1])):
-        threadAP = threading.Thread(target=fakeAP, args=("Fake AP",))
+        threadAP = threading.Thread(target=fakeAP, args=("Fake AP " + str(x),))
         threadAP.start()
 else:
     try:

