@@ -42,7 +42,7 @@ else:
         # open the file
         f = open(sys.argv[1], "r")
         line = f.readline()
-        # read all lines and create a AP peer line
+        # read all lines and create an AP per line
         while line:
             threadAP = threading.Thread(target=fakeAP, args=(line,))
             threadAP.start()

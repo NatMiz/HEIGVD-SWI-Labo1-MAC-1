@@ -16,11 +16,14 @@
 from scapy.all import *
 import os
 
+if len(sys.argv) != 2:
+    print("Usage: evil-twin-fake-channel.py <interface>")
+    exit()
+
 # SSID sniffer
 # Based on the code of Adam Ziaja's ssid-sniffer.py (https://github.com/adamziaja/python/blob/master/ssid_sniffer.py)
-
-ssid_list =  [] # List of the ssid in the proximity
-interface = "wlan0mon"
+ssid_list =  [] # List of the ssid in the vicinity
+interface = sys.argv[1] # The interface is passed as argument
 
 def packetHandler(pkt):
     if pkt.haslayer(Dot11Beacon): # 802.11 beacon packets

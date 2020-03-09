@@ -35,7 +35,6 @@ while(True):
         address2 = sys.argv[2]
         break
     if int(reason) == 8:
-
         address1 = sys.argv[2]
         address2 = sys.argv[1]
         break
